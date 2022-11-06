@@ -101,17 +101,16 @@ END;
 /
 
 insert into alunos (nome) values ('Roberto');
+insert into alunos (nome) values ('Cleiton');
 
 select * from alunos;
 
-update alunos set finalizado = 'S' where cod=1;
+update alunos set finalizado = 'S' where cod=2;
 
+delete alunos where cod=2;
 
+update alunos set finalizado = 'N' where cod=2;
 
-
-
-delete alunos where cod=1;
-
-
+delete alunos where cod=2;
 
 commit;
