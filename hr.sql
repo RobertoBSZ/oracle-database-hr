@@ -1,32 +1,3 @@
-DROP USER "ADMIN" CASCADE;
-CREATE USER "ADMIN" IDENTIFIED BY "123"  
-DEFAULT TABLESPACE "USERS"
-TEMPORARY TABLESPACE "TEMP";
-
-GRANT "DBA" TO "ADMIN" ;
-GRANT "CONNECT" TO "ADMIN" ;
-GRANT "RESOURCE" TO "ADMIN" ;
-
-GRANT CREATE ROLE TO "ADMIN" ;
-GRANT CREATE TRIGGER TO "ADMIN" ;
-GRANT ALTER SESSION TO "ADMIN" ;
-GRANT CREATE VIEW TO "ADMIN" ;
-GRANT CREATE SESSION TO "ADMIN" ;
-GRANT CREATE RULE TO "ADMIN" ;
-GRANT CREATE TABLE TO "ADMIN" ;
-GRANT CREATE TYPE TO "ADMIN" ;
-GRANT CREATE TABLESPACE TO "ADMIN" ;
-GRANT ALTER USER TO "ADMIN" ;
-GRANT CREATE SEQUENCE TO "ADMIN" ;
-GRANT CREATE USER TO "ADMIN" ;
-GRANT ALTER TABLESPACE TO "ADMIN" ;
-GRANT DROP USER TO "ADMIN" ;
-GRANT ALTER SYSTEM TO "ADMIN" ;
-GRANT DROP TABLESPACE TO "ADMIN" ;
-
-CONNECT ADMIN/123@localhost:1521/xepdb1;
-
-
 drop table alunos cascade constraints;
 create table alunos (
     cod number(5) not null,
@@ -100,17 +71,24 @@ BEGIN
 END;
 /
 
-insert into alunos (nome) values ('Roberto');
-insert into alunos (nome) values ('Cleiton');
+DROP USER "ADMIN" CASCADE;
+CREATE USER "ADMIN" IDENTIFIED BY "123";
+GRANT SELECT, UPDATE, INSERT, DELETE ON system.alunos to ADMIN;
+GRANT CREATE SESSION TO "ADMIN";
 
-select * from alunos;
+CONNECT ADMIN/123@localhost:1521/xepdb1;
 
-update alunos set finalizado = 'S' where cod=2;
+insert into system.alunos (nome) values ('Roberto');
+insert into system.alunos (nome) values ('Cleiton');
 
-delete alunos where cod=2;
+select * from system.alunos;
 
-update alunos set finalizado = 'N' where cod=2;
+update system.alunos set finalizado = 'S' where cod=2;
 
-delete alunos where cod=2;
+delete system.alunos where cod=2;
+
+update system.alunos set finalizado = 'N' where cod=2;
+
+delete system.alunos where cod=2;
 
 commit;
